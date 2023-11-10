@@ -1,0 +1,38 @@
+# IDEs and editors
+.idea/
+.project
+.pydevproject
+.mr.developer.cfg
+.classpath
+.c9/
+*.launch
+.settings/
+.history
+*.chproj
+*.sublime-*
+*.sublime-workspace
+.DS_Store
+.vscode
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# System Files
+.DS_Store
+debug.out
+Thumbs.db
+*.icloud
+thumbnail_kvstore*
+octave-workspace
+.bash_history
+package-lock.json
+file_watcher.pid
+nginx_signing*
+*.sock
+*.sock.lock
+*.sqlite3
+
+# nektos/act files
+.secrets
+.env
