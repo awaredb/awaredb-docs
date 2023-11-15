@@ -84,7 +84,7 @@ Syntax:
   },
   "engine": {
     "power": {
-      "linked-to": "this.package"
+      "linked": "this.package"
       "cases": [
         ["comfort", "96 hp"],
         ["sport", "250 hp"]
@@ -341,7 +341,7 @@ Syntax:
   },
   "engine": {
     "power": {
-      "linked-to": "this.package"
+      "linked": "this.package"
       "cases": [
         ["comfort", "96 hp"],
         ["sport", "250 hp"]
@@ -359,7 +359,7 @@ Output [1]: "250 hp"
 
 Linked-states designate a parent state that activates child states during calculations.
 
-Syntax
+Syntax:
 ```
 {
   "name": "car",
@@ -368,7 +368,7 @@ Syntax
       "states": ["on", "off"],
     },
     "power_consumption": {
-      "linked-to": "this.lights.status",
+      "linked": "this.lights.status",
       "cases": [
         ["on", "20 W"],
         ["off", "0 W"]
@@ -380,7 +380,7 @@ Syntax
       "states": ["on", "off"],
     }
     "power_consumption": {
-      "linked-to": "this.lights.status",
+      "linked": "this.lights.status",
       "cases": [
         ["on", "600 W"],
         ["off", "0 W"]
