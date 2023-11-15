@@ -37,8 +37,8 @@ awaredb.update({
   "type": "electric",
   "power": "202 kW",
   "torque": "404 Nm",
-  "voltage": "320 V"
-  "km_per_kwh" "5.5 'km/kWh'",
+  "voltage": "320 V",
+  "km_per_kwh": "5.5 'km/kWh'",
 })
 ```
 
@@ -54,7 +54,7 @@ awaredb.update({
   "packages": {
     "states": ["standard", "long-range"]
   },
-  "engine" "eng-200-2023",
+  "engine": "eng-200-2023",
   "batteries": {
     "linked": "this.packages",
     "cases": [
@@ -77,18 +77,18 @@ result = awaredb.get("model-x-2023.batteries.capacity")
 print(result)
 
 # Output: {
-#   "linked": "model-x-2023.packages",
+#   "linked": "'model-x-2023'.packages",
 #   "cases": [
 #      ["standard", "60.0 kWh"],
 #      ["long-range", "100.0 kWh"],
 #   ]
 # }
 
-result = awaredb.get("model-x-2023.batteries.range")
+result = awaredb.get("model-x-2023.range")
 print(result)
 
 # Output: {
-#   "linked": "model-x-2023.packages",
+#   "linked": "'model-x-2023'.packages",
 #   "cases": [
 #      ["standard", "330.0 km"],
 #      ["long-range", "550.0 km"],
@@ -99,12 +99,18 @@ print(result)
 Finally, let's perform the same action, but this time, let's specify the package (state) we want to read:
 
 ```python
-result = awaredb.get("model-x-2023.batteries.capacity", states=["model-x-2023.packages.standard"])
+result = awaredb.get(
+  "model-x-2023.batteries.capacity",
+  states=["model-x-2023.packages.standard"],
+)
 print(result)
 
 # Output: "60.0 kWh"
 
-result = awaredb.get("model-x-2023.range", states=["model-x-2023.packages.long-range"])
+result = awaredb.get(
+  "model-x-2023.range",
+  states=["model-x-2023.packages.long-range"],
+)
 print(result)
 
 # Output: "550.0 km"
