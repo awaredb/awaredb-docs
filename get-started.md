@@ -57,3 +57,29 @@ print(result)
 That's it. Simple as that! Next, try one of our examples:
 
 * [Car](/examples/car.md)
+
+
+## Formula vs Text
+
+AwareDB attempts to discern whether a property is a formula or plain text. If the formula is invalid,
+it gracefully defaults to treating it as text without triggering an error. However, there's an option
+to deliberately force a function and receive an error for invalid cases by commencing it with `=`.
+Likewise, one can enforce text interpretation by commencing with `#`.
+
+```python
+awaredb.update({
+  "uid": "example",
+  "forceFormula": "=2 + 3",
+  "forceText": "#2 + 3",
+})
+
+result = awaredb.get("example.forceFormula")
+print(result)
+
+# Output: "5.0"
+
+result = awaredb.get("example.forceText")
+print(result)
+
+# Output: "2 + 3"
+```

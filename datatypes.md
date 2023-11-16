@@ -464,6 +464,6 @@ Syntax:
 {
   "name": "Blog",
   "author": "Jane Doe",
-  "summary": "Lorem ipsum dolor sit amet by {{Blog.author}}."
+  "summary": "Lorem ipsum dolor sit amet by ${Blog.author}."
 }
 ```
