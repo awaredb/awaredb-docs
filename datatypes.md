@@ -6,26 +6,26 @@ the same node or utilized in various calculations. Notably, complex datatypes—
 as cases, datasets, lists, and matrices have the capacity to encapsulate
 other datatypes within them.
 
+For the following examples, we'll be employing the Python API.
+
 ## Booleans
 
 A boolean can be represented by either a JSON boolean or text containing the words `true` or `false`. The text is case-insensitive.
 
-Syntax:
-```
-{
+```python
+awaredb.update({
   "eg1": true,
   "eg2": "False",
-}
+})
 ```
 
 ## Cases
 
 Cases enable the calculation of a property's value based on specified conditions.
 
-Syntax:
-```
-{
-  "name": "my_node",
+```python
+awaredb.update({
+  "uid": "my_node",
   "prop" {
     "cases": [
       ["condition1", "value1"]
@@ -34,8 +34,7 @@ Syntax:
       ["default", "default value"]
     ]
   }
-}
-
+})
 ```
 
 ### Fn cases
@@ -43,31 +42,32 @@ Syntax:
 By combining [Fns](#fns), cases can utilize input to calculate conditions,
 making it valuable for retrieving a value based on the input.
 
-```
-{
-  "name": "Tax",
-  "salary": {
-    "cases":
-      [
-        ["{X} >= 200000", "0.40"],
-        ["{X} >= 100000", "0.30"],
-        ["default", "0.25"]
-      ]
-  }
-}
+```python
+awaredb.update([
+  {
+    "uid": "Tax",
+    "salary": {
+      "cases":
+        [
+          ["{X} >= 200000", "0.40"],
+          ["{X} >= 100000", "0.30"],
+          ["default", "0.25"]
+        ]
+    }
+  },
+  {
+    "uid": "20023-230",
+    "name": "Jane Doe",
+    "salary": {
+      "gross": "100000",
+      "net": "${this.salary.gross} - ${this.salary.tax}",
+      "tax": "${Tax.salary(${this.salary.gross})}
+    }
+  },
+])
 
-{
-  "name": "Jane Doe",
-  "salary": {
-    "gross": "100000",
-    "net": "${this.salary.gross} - ${this.salary.tax}",
-    "tax": "${Tax.salary(${this.salary.gross})}
-  }
-}
-
-# Calculated values
-Input [1]: awaredb.get("Jane Doe.salary.net")
-Output [1]: 70000
+awaredb.get("Jane Doe.salary.net")
+# Output: 70000
 ```
 
 
@@ -75,10 +75,9 @@ Output [1]: 70000
 
 State-linked cases enable the value of a property be based on the [active states](#states) during calculation.
 
-Syntax:
-```
-{
-  "name": "car",
+```python
+awaredb.update({
+  "uid": "car",
   "package": {
     "states": ["comfort", "sport"]
   },
@@ -91,13 +90,13 @@ Syntax:
       ]
     }
   }
-}
+})
 
-# Calculated
-Input [1]: awaredb.get("car.engine.power", states=["car.package.sport"])
-Output [1]: "250 hp"
-Input [1]: awaredb.get("car.engine.power", states=["car.package.comfort"])
-Output [1]: "96 hp"
+awaredb.get("car.engine.power", states=["car.package.sport"])
+# Output: "250 hp"
+
+awaredb.get("car.engine.power", states=["car.package.comfort"])
+# Output: "96 hp"
 ```
 
 
@@ -106,20 +105,18 @@ Output [1]: "96 hp"
 A dataset is represented by a list of lists.
 
 
-Syntax:
-
-```
-{
+```python
+awaredb.update({
   "my_dataset": {
     "type": "dataset",
-    "data: [
+    "data": [
       [0, 0],
       [1, 2],
-      [2, 5]
+      [2, 5],
     ],
     "interpolation": "stepwise"
   }
-}
+})
 ```
 
 ### Interpolation
@@ -142,9 +139,9 @@ the outcome of the evaluation.
 
 Let's say we want to define a dataset that will be telling the position of an object within X, Y and Z based on time:
 
-```
-{
-  "name": "dts",
+```python
+awaredb.update({
+  "uid": "dts",
   "position": {
     "type": "dataset",
     "variables" : [
@@ -161,18 +158,17 @@ Let's say we want to define a dataset that will be telling the position of an ob
       [4, 1, 3, 3],
     ]
   }
-}
+})
 
-# In calculation
-Input [1]: awaredb.calculate("${dts.position(3)}")
-Output [1]: {"x": "0 m", "y": "2 m", "z": "2 m"}
+awaredb.calculate("${dts.position(3)}")
+# Output: {"x": "0 m", "y": "2 m", "z": "2 m"}
 ```
 
 #### Example 2: Get altitude for a coordinate
 
-```
-{
-  "name": "dts",
+```python
+awaredb.calculate({
+  "uid": "dts",
   "altitude": {
     "type": "dataset",
     "variables" : [
@@ -186,11 +182,10 @@ Output [1]: {"x": "0 m", "y": "2 m", "z": "2 m"}
       [42.699949, 0.536686, 3045]
     ]
   }
-}
+})
 
-# In calculation
-Input [1]: awaredb.calculate("${dts.altitude(40.320563, -7.596868)}")
-Output [1]: "1990 m"
+awaredb.calculate("${dts.altitude(40.320563, -7.596868)}")
+# Output: "1990 m"
 ```
 
 ## Date & Time
@@ -198,13 +193,13 @@ Output [1]: "1990 m"
 Dates and times are conveyed using their respective ISO format,
 encapsulated within the DATE(iso-format) definition.
 
-Syntax:
-```
-{
+```python
+awaredb.update({
+  "uid": "myDates",
   "datetime": "DATE(2012-07-14T01:00:00+01:00)",
   "date": "DATE(2012-07-14)",
   "time": "DATE(01:00:00)",
-}
+})
 ```
 
 ## Fns
@@ -213,74 +208,72 @@ An Fn serves as a representation of a mathematical formula, wherein variables ar
 evaluated during runtime. This capability enables the retrieval of a function's value
 based on the given input.
 
-Syntax:
-```
-{
+```python
+awaredb.update({
+  "uid": "myFn",
   "fn": "{X} * 0.25"
-}
+})
 ```
 
 These are specially useful in combination with [cases](#fn-cases).
 
-```
-{
-  "name": "Tax",
-  "salary": {
-    "cases":
-      [
-        ["{X} >= 200000", "0.40"],
-        ["{X} >= 100000", "0.30"],
-        ["default", "0.25"]
-      ]
+```python
+awaredb.update([
+  {
+    "uid": "Tax",
+    "salary": {
+      "cases":
+        [
+          ["{X} >= 200000", "0.40"],
+          ["{X} >= 100000", "0.30"],
+          ["default", "0.25"]
+        ]
+    }
+  },
+  {
+    "uid": "2023-023",
+    "name": "Jane Doe",
+    "salary": {
+      "gross": "100000",
+      "net": "${this.salary.gross} - ${this.salary.tax}",
+      "tax": "${Tax.salary(${this.salary.gross})}
+    }
   }
-}
+])
 
-{
-  "name": "Jane Doe",
-  "salary": {
-    "gross": "100000",
-    "net": "${this.salary.gross} - ${this.salary.tax}",
-    "tax": "${Tax.salary(${this.salary.gross})}
-  }
-}
-
-# Calculated values
-Input [1]: awaredb.get("Jane Doe.salary.net")
-Output [1]: 70000
+awaredb.get("Jane Doe.salary.net")
+# Output: 70000
 ```
-
 
 
 ## List
 
 A property has the flexibility to be expressed as a list of values.
 
-
-Syntax:
-```
-{
-  "myList": ["2 g", "5 kg", "300 g"],
-}
+```python
+awaredb.update({
+  "uid": "myList",
+  "weights": ["2 g", "5 kg", "300 g"],
+})
 ```
 
 ## Matrices
 
 A matrix is succinctly portrayed as a list of lists, and both representations are considered valid.
 
-
-Syntax:
-```
-{
+```python
+awaredb.update({
+  "uid": "myMatrices",
   "matrix1": {
     "type": "matrix",
-    "data: [
+    "data": [
       [0, 0, 0],
       [1, 1, 1],
       [2, 2, 2]
     ]
   },
   "matrix2": "matrix([[0, 0], [2, 2]])"
-}
+})
 ```
 
 ## None
@@ -288,13 +281,12 @@ Syntax:
 None is an acceptable property value, and it can be specified using either null or text
 containing the words `null` or `none`. The text is case-insensitive.
 
-
-Syntax:
-```
-{
+```python
+awaredb.update({
+  "uid": "fullOfNones",
   "none1": null,
   "none2": "none",
-}
+})
 ```
 
 
@@ -304,23 +296,23 @@ A quantity is defined by a magnitude and an optional unit.
 This framework enables the definition, operation, and manipulation of physical quantities,
 facilitating arithmetic operations even when the units differ but are compatible.
 
-Syntax:
-```
-{
-  "name": "My Cat",
+```python
+awaredb.update({
+  "uid": "MyCat",
   "weight": "4.5 kg",
   "length": "30 cm",
   "age": "3 years"
   "number_of_colors": 2,
-}
+})
 ```
 
 In the case of composite units, they should be enclosed in quotes.
 
-```
-{
+```python
+awaredb.update({
+  "uid": "ImFast",
   "speed": "120 'km/h'",
-}
+})
 ```
 
 ## States
@@ -329,10 +321,9 @@ States enable the superposition of values for a singular property.
 For instance, they can delineate modes, alternatives, or versions within your project.
 To fully leverage their benefits, they are typically used in conjunction with [state-linked cases](#state-linked-cases).
 
-Syntax:
-```
-{
-  "name": "car",
+```python
+awaredb.update({
+  "uid": "car",
   "versions": {
     "states": ["x2019", "x2023"]
   },
@@ -348,21 +339,19 @@ Syntax:
       ]
     }
   }
-}
+})
 
-# Calculated
-Input [1]: awaredb.get("car.engine.power", states=["car.package.sport"])
-Output [1]: "250 hp"
+awaredb.get("car.engine.power", states=["car.package.sport"])
+# Output: "250 hp"
 ```
 
 ### Linked-states
 
 Linked-states designate a parent state that activates child states during calculations.
 
-Syntax:
-```
-{
-  "name": "car",
+```python
+awaredb.update({
+  "uid": "car",
   "lights": {
     "status": {
       "states": ["on", "off"],
@@ -395,11 +384,10 @@ Syntax:
     }
   },
   "power_consumption": "sum(children.power_consumption)"
-}
+})
 
-# Calculated
-Input [1]: awaredb.get("car.power_consumption", states="car.mode.comfort")
-Output [1]: "620 W"
+awaredb.get("car.power_consumption", states="car.mode.comfort")
+Output: "620 W"
 ```
 
 
@@ -407,51 +395,53 @@ Output [1]: "620 W"
 
 You can incorporate an existing node as a property, essentially functioning as a sub-node.
 
-Syntax:
-```
-{
-  "name": "eng-1200cc",
-  "power": "96 hp"
-},
-{
-  "name": "car",
-  "engine": "eng-1200cc"
-}
+```python
+awaredb.update([
+  {
+    "uid": "eng-1200cc",
+    "power": "96 hp"
+  },
+  {
+    "uid": "car",
+    "engine": "eng-1200cc"
+  }
+])
 
-# Calculated
-Input [1]: awaredb.get("car.engine.power")
-Output [1]: "96 hp"
+awaredb.get("car.engine.power")
+# Output: "96 hp"
 ```
 
 This is specially powerful when using with the combination of [states](#states) and [cases](#cases):
 
-```
-{
-  "name": "eng-1200cc",
-  "power": "96 hp"
-},
-{
-  "name": "eng-2000cc",
-  "power": "250 hp"
-},
-{
-  "name": "car",
-  "model": {
-    "states": ["comfort", "sport"]
+```python
+awaredb.update([
+  {
+    "uid": "eng-1200cc",
+    "power": "96 hp",
+  },
+  {
+    "uid": "eng-2000cc",
+    "power": "250 hp",
+  },
+  {
+    "uid": "car",
+    "model": {
+      "states": ["comfort", "sport"],
+    }
+    "engine": {
+      "cases": [
+        "comfort": "eng-1200cc",
+        "sport": "eng-2000cc",
+      ]
+    }
   }
-  "engine": {
-    "cases": [
-      "comfort": "eng-1200cc",
-      "sport": "eng-2000cc",
-    ]
-  }
-}
+])
 
-# Calculated
-Input [1]: awaredb.get("car.engine.power", states="car.model.comfort")
-Output [1]: "96 hp"
-Input [2]: awaredb.get("car.engine.power", states="car.model.sport")
-Output [2]: "250 hp"
+awaredb.get("car.engine.power", states="car.model.comfort")
+# Output: "96 hp"
+
+awaredb.get("car.engine.power", states="car.model.sport")
+# Output: "250 hp"
 ```
 
 
@@ -459,11 +449,10 @@ Output [2]: "250 hp"
 
 A text refers to a sequence of characters enclosed within quotation marks. Additionally, it allows referencing other properties within it.
 
-Syntax:
-```
-{
-  "name": "Blog",
+```python
+awaredb.update({
+  "uid": "Blog",
   "author": "Jane Doe",
   "summary": "Lorem ipsum dolor sit amet by ${Blog.author}."
-}
+})
 ```
