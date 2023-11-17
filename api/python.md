@@ -343,3 +343,22 @@ Output: [
     }
   ]
 ```
+
+## Load JSON files
+
+The Python API enables you to seamlessly organize your data into folders and
+effortlessly upload them to AwareDB, eliminating the need to create your nodes
+directly within your code.
+
+
+Params:
+* `filepath`: Path to a JSON file or a folder containing JSON files.
+* `recursive`: Set to True if you wish to upload files from all sub-folders recursively. Defaults to False.
+* `flush`: Set to True if you want to clear all DB data before uploading the new data; Defaults to False.
+
+
+Example of a call:
+
+```python
+awaredb.load("<path-to-file-or-folder>", recursive=True)
+```
