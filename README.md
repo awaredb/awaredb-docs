@@ -12,12 +12,12 @@ abstractions and interfaces.
 AwareDB aims to revolutionize the traditional approach to data by introducing the principle
 of **modularity** directly into the **data structure**. While modularity is a well-established
 concept in computer science, primarily applied to programming and infrastructure, the realm
-of data has remained predominantly static and non-modular,tightly bound to the code
+of data has remained predominantly static and non-modular, tightly bound to the code
 that governs it.
 
-Our innovative approach introduces a groundbreaking concept wherein data becomes **self-aware**.
-Individual pieces of data can seamlessly **connect**, **reference one another** through direct links
-or employ **mathematical** and **logical operations**. Notably, alterations to one node trigger
+We introduced the concept wherein data becomes **self-aware**. Individual pieces of data
+can seamlessly **connect**, **reference one another** through direct links or employ
+**mathematical** and **logical operations**. Notably, alterations to one node trigger
 **automatic cascading impacts** throughout the system, all achieved without the need for
 additional code.
 

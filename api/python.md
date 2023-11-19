@@ -23,7 +23,7 @@ nodes = awaredb.query(nodes=["*"])
 
 ## Read commands
 
-#### calculate
+### calculate
 
 Execute calculations using existing nodes in the database.
 
