@@ -13,7 +13,7 @@ Example of a call:
 ```
 POST: /rest/db/<db-name>/calculate/
 DATA: {
-  formula: "${car.power} * 2",
+  formula: "car.power * 2",
   states: [car.model.x]
 }
 ```
@@ -83,7 +83,7 @@ Example of a call:
 POST: /rest/db/<db-name>/query/
 DATA: {
   nodes: ["employee"],
-  conditions: ["${node.salary.gross} > 60000"]
+  conditions: ["node.salary.gross > 60000"]
 }
 ```
 
@@ -162,11 +162,11 @@ DATA: {
           "high": ["this.engine.mode.high", "this.lights.status.on"]
         }
       },
-      "power": "=sum(${this.children.power})",
+      "power": "=sum(this.children.power)",
       "engine": {
         "mode": {"states": ["off", "low", "mid", "high"]},
         "power": {
-          "linked": "${this.engine.mode}",
+          "linked": "this.engine.mode",
           "cases": [
             ["low", "10 W"],
             ["mid", "20 W"],
@@ -174,7 +174,7 @@ DATA: {
             ["default", "0 W"]
           ]
         },
-        "speed": "=10 rpm * (${this.engine.power} / 1 W)"
+        "speed": "=10 rpm * (this.engine.power / 1 W)"
       },
       "lights": {
         "status": {"states": ["off", "on"]},
@@ -205,11 +205,11 @@ Example of a calculate response:
           "high": ["this.engine.mode.high", "this.lights.status.on"]
         }
       },
-      "power": "=sum(${this.children.power})",
+      "power": "=sum(this.children.power)",
       "engine": {
         "mode": {"states": ["off", "low", "mid", "high"]},
         "power": {
-          "linked": "${this.engine.mode}",
+          "linked": "this.engine.mode",
           "cases": [
             ["low", "10 W"],
             ["mid", "20 W"],
@@ -217,7 +217,7 @@ Example of a calculate response:
             ["default", "0 W"]
           ]
         },
-        "speed": "=10 rpm * (${this.engine.power} / 1 W)"
+        "speed": "=10 rpm * (this.engine.power / 1 W)"
       },
       "lights": {
         "status": {"states": ["off", "on"]},
@@ -286,7 +286,7 @@ Example of a calculate response:
         "engine": {
           "mode": {"states": ["off", "low", "mid", "high"]},
           "power": {
-            "linked": "${this.engine.mode}",
+            "linked": "this.engine.mode",
             "cases": [
               ["low", "10 W"],
               ["mid", "20 W"],

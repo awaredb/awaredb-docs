@@ -49,8 +49,8 @@ awaredb.update([
     "salary": {
       "cases":
         [
-          ["{X} >= 200000", "0.40"],
-          ["{X} >= 100000", "0.30"],
+          ["_X_ >= 200000", "0.40"],
+          ["_X_ >= 100000", "0.30"],
           ["default", "0.25"]
         ]
     }
@@ -60,13 +60,13 @@ awaredb.update([
     "name": "Jane Doe",
     "salary": {
       "gross": "100000",
-      "net": "${this.salary.gross} - ${this.salary.tax}",
-      "tax": "${Tax.salary(${this.salary.gross})}
+      "net": "this.salary.gross - this.salary.tax",
+      "tax": "Tax.salary(this.salary.gross)",
     }
   },
 ])
 
-awaredb.get("Jane Doe.salary.net")
+awaredb.get("'Jane Doe'.salary.net")
 # Output: 70000
 ```
 
@@ -160,7 +160,7 @@ awaredb.update({
   }
 })
 
-awaredb.calculate("${dts.position(3)}")
+awaredb.calculate("dts.position(3)")
 # Output: {"x": "0 m", "y": "2 m", "z": "2 m"}
 ```
 
@@ -184,7 +184,7 @@ awaredb.calculate({
   }
 })
 
-awaredb.calculate("${dts.altitude(40.320563, -7.596868)}")
+awaredb.calculate("dts.altitude(40.320563, -7.596868)")
 # Output: "1990 m"
 ```
 
@@ -211,7 +211,7 @@ based on the given input.
 ```python
 awaredb.update({
   "uid": "myFn",
-  "fn": "{X} * 0.25"
+  "fn": "_X_ * 0.25"
 })
 ```
 
@@ -224,8 +224,8 @@ awaredb.update([
     "salary": {
       "cases":
         [
-          ["{X} >= 200000", "0.40"],
-          ["{X} >= 100000", "0.30"],
+          ["_X_ >= 200000", "0.40"],
+          ["_X_ >= 100000", "0.30"],
           ["default", "0.25"]
         ]
     }
@@ -235,13 +235,13 @@ awaredb.update([
     "name": "Jane Doe",
     "salary": {
       "gross": "100000",
-      "net": "${this.salary.gross} - ${this.salary.tax}",
-      "tax": "${Tax.salary(${this.salary.gross})}
+      "net": "this.salary.gross - this.salary.tax",
+      "tax": "Tax.salary(this.salary.gross)",
     }
   }
 ])
 
-awaredb.get("Jane Doe.salary.net")
+awaredb.get("'Jane Doe'.salary.net")
 # Output: 70000
 ```
 
@@ -453,6 +453,6 @@ A text refers to a sequence of characters enclosed within quotation marks. Addit
 awaredb.update({
   "uid": "Blog",
   "author": "Jane Doe",
-  "summary": "Lorem ipsum dolor sit amet by ${Blog.author}."
+  "summary": "Lorem ipsum dolor sit amet by Blog.author."
 })
 ```

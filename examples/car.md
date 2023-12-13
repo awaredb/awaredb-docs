@@ -33,7 +33,7 @@ awaredb.update([
 
 ```python
 awaredb.update({
-  "uid": "eng-200-2023",
+  "uid": "eng_200_2023",
   "type": "electric",
   "power": "202 kW",
   "torque": "404 Nm",
@@ -49,20 +49,20 @@ Here's how they outline this dependency:
 
 ```python
 awaredb.update({
-  "uid": "model-x-2023",
+  "uid": "modelX_2023",
   "name": "Model X",
   "packages": {
-    "states": ["standard", "long-range"]
+    "states": ["standard", "long_range"]
   },
-  "engine": "eng-200-2023",
+  "engine": "eng_200_2023",
   "batteries": {
     "linked": "this.packages",
     "cases": [
       ["standard", "bat60"],
-      ["long-range", "bat100"],
+      ["long_range", "bat100"],
     ]
   },
-  "range": "${this.batteries.capacity} * ${this.engine.km_per_kwh}",
+  "range": "this.batteries.capacity * this.engine.km_per_kwh",
 })
 ```
 
@@ -73,25 +73,25 @@ Consequently, the range of the car will also be contingent upon the chosen packa
 Now, let's review the values. If we **don't specify the package** (state), we'll get the result as a case:
 
 ```python
-result = awaredb.get("model-x-2023.batteries.capacity")
+result = awaredb.get("modelX_2023.batteries.capacity")
 print(result)
 
 # Output: {
-#   "linked": "'model-x-2023'.packages",
+#   "linked": "modelX_2023.packages",
 #   "cases": [
 #      ["standard", "60.0 kWh"],
-#      ["long-range", "100.0 kWh"],
+#      ["long_range", "100.0 kWh"],
 #   ]
 # }
 
-result = awaredb.get("model-x-2023.range")
+result = awaredb.get("modelX_2023.range")
 print(result)
 
 # Output: {
-#   "linked": "'model-x-2023'.packages",
+#   "linked": "modelX_2023.packages",
 #   "cases": [
 #      ["standard", "330.0 km"],
-#      ["long-range", "550.0 km"],
+#      ["long_range", "550.0 km"],
 #   ]
 # }
 ```
@@ -100,16 +100,16 @@ Finally, let's perform the same action, but this time, let's specify the package
 
 ```python
 result = awaredb.get(
-  "model-x-2023.batteries.capacity",
-  states=["model-x-2023.packages.standard"],
+  "modelX_2023.batteries.capacity",
+  states=["modelX_2023.packages.standard"],
 )
 print(result)
 
 # Output: "60.0 kWh"
 
 result = awaredb.get(
-  "model-x-2023.range",
-  states=["model-x-2023.packages.long-range"],
+  "modelX_2023.range",
+  states=["modelX_2023.packages.long_range"],
 )
 print(result)
 

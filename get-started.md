@@ -23,7 +23,7 @@ awaredb.update(
     "uid": "myFirstNode",
     "hello": "Hello",
     "world": "World",
-    "full_text": "${this.hello} {this.world}!"
+    "full_text": "this.hello this.world!"
   }
 )
 ```
@@ -64,13 +64,15 @@ That's it. Simple as that! Next, try one of our examples:
 AwareDB attempts to discern whether a property is a formula or plain text. If the formula is invalid,
 it gracefully defaults to treating it as text without triggering an error. However, there's an option
 to deliberately force a function and receive an error for invalid cases by commencing it with `=`.
-Likewise, one can enforce text interpretation by commencing with `#`.
+Likewise, one can enforce text interpretation by commencing with `#`. Inside of a text, is possible
+to reference any other property.
 
 ```python
 awaredb.update({
   "uid": "example",
   "forceFormula": "=2 + 3",
   "forceText": "#2 + 3",
+  "reference": "The result of {{this.forceText}} is {{this.forceFormula}}",
 })
 
 result = awaredb.get("example.forceFormula")
@@ -82,4 +84,9 @@ result = awaredb.get("example.forceText")
 print(result)
 
 # Output: "2 + 3"
+
+result = awaredb.get("example.reference")
+print(result)
+
+# Output: "The result of 2 + 3 is 5.0"
 ```
