@@ -315,6 +315,15 @@ awaredb.update({
 })
 ```
 
+Quantities can also be represented using scientific notation. For instance, the number 0.000002 grams can be written as `2e-06 g`.
+
+```python
+awaredb.update({
+  "uid": "TinyParticle",
+  "mass": "2e-06 g",
+})
+```
+
 ## States
 
 States enable the superposition of values for a singular property.

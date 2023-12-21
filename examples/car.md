@@ -73,8 +73,7 @@ Consequently, the range of the car will also be contingent upon the chosen packa
 Now, let's review the values. If we **don't specify the package** (state), we'll get the result as a case:
 
 ```python
-result = awaredb.get("modelX_2023.batteries.capacity")
-print(result)
+awaredb.get("modelX_2023.batteries.capacity")
 
 # Output: {
 #   "linked": "modelX_2023.packages",
@@ -84,8 +83,7 @@ print(result)
 #   ]
 # }
 
-result = awaredb.get("modelX_2023.range")
-print(result)
+awaredb.get("modelX_2023.range")
 
 # Output: {
 #   "linked": "modelX_2023.packages",
@@ -99,19 +97,17 @@ print(result)
 Finally, let's perform the same action, but this time, let's specify the package (state) we want to read:
 
 ```python
-result = awaredb.get(
+awaredb.get(
   "modelX_2023.batteries.capacity",
   states=["modelX_2023.packages.standard"],
 )
-print(result)
 
 # Output: "60.0 kWh"
 
-result = awaredb.get(
+awaredb.get(
   "modelX_2023.range",
   states=["modelX_2023.packages.long_range"],
 )
-print(result)
 
 # Output: "550.0 km"
 ```
