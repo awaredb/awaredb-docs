@@ -1,0 +1,19 @@
+body {
+  --theme-color: #00abe4;
+  background-attachment: fixed;
+}
+#app::before { display: none !important; }
+.sidebar { padding-top: 0 !important; }
+.markdown-section code {
+  background-color: #f8fbfe;
+  color: #ee9c1d;
+}
+.markdown-section pre {
+  background-color: #f8fbfe;
+}
+.markdown-section pre::after {
+  color: #c3c5c8;
+}
+.token.tag {
+  color: #00abe4;
+}
