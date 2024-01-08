@@ -135,8 +135,8 @@ awaredb.what_if(
 
 # Example of a calculate response
 Output: {
-  "battery.capacity": "55 kWh",
-  "car.range": "180 km"
+  "battery.capacity": {"old": "40 kWh", "new": "55 kWh"},
+  "car.range": {"old": "140 km", "new": "180 km"}
 }
 ```
 
