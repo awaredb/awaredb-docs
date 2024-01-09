@@ -63,6 +63,98 @@ Example of a calculate response:
 ```
 
 
+## /history
+
+Return list of changes for a database.
+
+Params:
+* `change_id`: Request details for a specific change. If passed, all other inputs are ignored.
+* `ids`: IDs list of specific nodes or relation. Optional.
+* `start`: Initial number for pagination. Defaults to 0.
+* `end`: End number for pagination. Defaults to 1000.
+* `from_date`: Limit list from a specific date. Optional.
+* `to_date`: Limit list until a specific date. Optional.
+
+Note: for `ids`, null or omission is different than empty list. Empty list won't return anything.
+
+Example of a call:
+
+```
+POST: /rest/db/<db-name>/history/
+DATA: {}
+```
+
+Example of a history response:
+```
+{
+  "data": [
+    {
+      "id":"7ba39dc2-935e-437c-9bc0-915928174f90",
+      "user": "6b0761e2-ffb5-4c79-a530-f3eae1313575",
+      "info": {
+        "action": "update",
+        "description": "`bat60 (1bac1d4b-6658-4e8f-8ba5-6e6e9949b548)` was updated.",
+        "properties": ["capacity"],
+        "impacted":[
+          "5a4992d0-cfb1-4144-9675-d1f80cdd66a5",
+          "6692ce3e-3b50-47b3-99b0-dd72008ae641"
+        ]
+      },
+      "date":"2024-01-08T12:08:52.660820Z"
+    }
+  ]
+}
+```
+
+Example of change details:
+
+```
+POST: /rest/db/<db-name>/history/
+DATA: {
+
+}
+```
+
+Example of details response:
+```
+{
+  "data": {
+    "nodes": [
+      {
+          "id":"1bac1d4b-6658-4e8f-8ba5-6e6e9949b548",
+          "revert": {"capacity": "60 kWh"},
+          "diff": {
+            "capacity": {
+              "old": "60 kWh"
+              "new": "62 kWh"
+            }
+          }
+      }
+    ],
+    "relations": [],
+    "relation_types":[],
+    "changes": {
+      "5a4992d0-cfb1-4144-9675-d1f80cdd66a5.batteries.capacity": {
+        "old": "60 kWh",
+        "new": "62 kWh"
+      },
+      "5a4992d0-cfb1-4144-9675-d1f80cdd66a5.batteries.range": {
+        "old": "330.0 km",
+        "new": "340.0 km"
+      },
+      "6692ce3e-3b50-47b3-99b0-dd72008ae641.batteries.capacity": {
+        "old": "60 kWh",
+        "new": "62 kWh"
+      },
+      "6692ce3e-3b50-47b3-99b0-dd72008ae641.batteries.range": {
+        "old": "294.0 km",
+        "new": "300.0 km"
+      }
+    }
+  }
+}
+```
+
 ## /query
 
 Returns a list of nodes based on the input.
