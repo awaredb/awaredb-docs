@@ -1,3 +1,20 @@
+## About AwareDB
+
+At its core, AwareDB focuses on the **mathematical and logical relationships** within your data.
+This approach empowers you to create **self-contained nodes** that **dynamically update**, eliminating
+the need for coding or manual intervention. When a property in one node changes, the system
+**automatically propagates the effects** wherever it's used or referenced.
+
+Designed with **modularity** in mind, data can be built from cohesive, loosely coupled pieces that
+are easily reusable and combinable to form more complex structures.
+
+Its flexibility makes it an ideal solution for data modeling needs across engineering,
+scientific, business analysis, and beyond.
+
+This marks a paradigm shift in data management, empowering a dynamic,
+interconnected, and **self-aware data environment**.
+
+
 ## About modularity
 
 In general terms, modularity refers to the extent to which a system's components
@@ -5,24 +22,6 @@ can be **separated** and **recombined**, offering flexibility and variety in use
 The concept aims to **reduce complexity** by breaking a system into interdependent
 and independent components, concealing the intricacies of each part behind
 abstractions and interfaces.
-
-
-## About AwareDB
-
-AwareDB aims to revolutionize the traditional approach to data by introducing the principle
-of **modularity** directly into the **data structure**. While modularity is a well-established
-concept in computer science, primarily applied to programming and infrastructure, the realm
-of data has remained predominantly static and non-modular, tightly bound to the code
-that governs it.
-
-We introduced the concept wherein data becomes **self-aware**. Individual pieces of data
-can seamlessly **connect**, **reference one another** through direct links or employ
-**mathematical** and **logical operations**. Notably, alterations to one node trigger
-**automatic cascading impacts** throughout the system, all achieved without the need for
-additional code.
-
-This marks a paradigm shift in data management, empowering a dynamic,
-interconnected, and **self-aware data environment**.
 
 
 ## Key Concepts
