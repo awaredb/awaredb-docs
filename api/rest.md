@@ -248,17 +248,17 @@ DATA: {
       "name": "Fan",
       "mode": {
         "states": {
-          "off": ["this.engine.mode.off", "this.lights.status.off"],
-          "low": ["this.engine.mode.low", "this.lights.status.on"],
-          "mid": ["this.engine.mode.mid", "this.lights.status.on"],
-          "high": ["this.engine.mode.high", "this.lights.status.on"]
+          "off": ["engine.mode.off", "lights.status.off"],
+          "low": ["engine.mode.low", "lights.status.on"],
+          "mid": ["engine.mode.mid", "lights.status.on"],
+          "high": ["engine.mode.high", "lights.status.on"]
         }
       },
-      "power": "=sum(this.children.power)",
+      "power": "=sum(children.power)",
       "engine": {
         "mode": {"states": ["off", "low", "mid", "high"]},
         "power": {
-          "linked": "this.engine.mode",
+          "linked": "engine.mode",
           "cases": [
             ["low", "10 W"],
             ["mid", "20 W"],
@@ -266,12 +266,12 @@ DATA: {
             ["default", "0 W"]
           ]
         },
-        "speed": "=10 rpm * (this.engine.power / 1 W)"
+        "speed": "=10 rpm * (engine.power / 1 W)"
       },
       "lights": {
         "status": {"states": ["off", "on"]},
         "power": {
-          "linked": "this.lights.status",
+          "linked": "lights.status",
           "cases": [
             ["off", "0 W"],
             ["on", "5 W"]
@@ -291,17 +291,17 @@ Example of a calculate response:
       "name": "Fan",
       "mode": {
         "states": {
-          "off": ["this.engine.mode.off", "this.lights.status.off"],
-          "low": ["this.engine.mode.low", "this.lights.status.on"],
-          "mid": ["this.engine.mode.mid", "this.lights.status.on"],
-          "high": ["this.engine.mode.high", "this.lights.status.on"]
+          "off": ["engine.mode.off", "lights.status.off"],
+          "low": ["engine.mode.low", "lights.status.on"],
+          "mid": ["engine.mode.mid", "lights.status.on"],
+          "high": ["engine.mode.high", "lights.status.on"]
         }
       },
-      "power": "=sum(this.children.power)",
+      "power": "=sum(children.power)",
       "engine": {
         "mode": {"states": ["off", "low", "mid", "high"]},
         "power": {
-          "linked": "this.engine.mode",
+          "linked": "engine.mode",
           "cases": [
             ["low", "10 W"],
             ["mid", "20 W"],
@@ -309,12 +309,12 @@ Example of a calculate response:
             ["default", "0 W"]
           ]
         },
-        "speed": "=10 rpm * (this.engine.power / 1 W)"
+        "speed": "=10 rpm * (engine.power / 1 W)"
       },
       "lights": {
         "status": {"states": ["off", "on"]},
         "power": {
-          "linked": "this.lights.status",
+          "linked": "lights.status",
           "cases": [
             ["off", "0 W"],
             ["on", "5 W"]
@@ -324,19 +324,19 @@ Example of a calculate response:
       "value": {
         "mode": {
           "states": {
-            "off": ["this.engine.mode.off", "this.lights.status.off"],
-            "low": ["this.engine.mode.low", "this.lights.status.on"],
-            "mid": ["this.engine.mode.mid", "this.lights.status.on"],
-            "high": ["this.engine.mode.high", "this.lights.status.on"]
+            "off": ["engine.mode.off", "lights.status.off"],
+            "low": ["engine.mode.low", "lights.status.on"],
+            "mid": ["engine.mode.mid", "lights.status.on"],
+            "high": ["engine.mode.high", "lights.status.on"]
           }
         },
         "power": {
-            "linked": "this.engine.mode",
+            "linked": "engine.mode",
             "cases": [
                 [
                     "low",
                     {
-                        "linked": "this.lights.status",
+                        "linked": "lights.status",
                         "cases": [
                             ["off", "10.0 W"],
                             ["on", "15.0 W"],
@@ -346,7 +346,7 @@ Example of a calculate response:
                 [
                     "mid",
                     {
-                        "linked": "this.lights.status",
+                        "linked": "lights.status",
                         "cases": [
                             ["off", "20.0 W"],
                             ["on", "25.0 W"],
@@ -356,7 +356,7 @@ Example of a calculate response:
                 [
                     "high",
                     {
-                        "linked": "this.lights.status",
+                        "linked": "lights.status",
                         "cases": [
                             ["off", "30.0 W"],
                             ["on", "35.0 W"],
@@ -366,7 +366,7 @@ Example of a calculate response:
                 [
                     "default",
                     {
-                        "linked": "this.lights.status",
+                        "linked": "lights.status",
                         "cases": [
                             ["off", "0.0 W"],
                             ["on", "5.0 W"],
@@ -378,7 +378,7 @@ Example of a calculate response:
         "engine": {
           "mode": {"states": ["off", "low", "mid", "high"]},
           "power": {
-            "linked": "this.engine.mode",
+            "linked": "engine.mode",
             "cases": [
               ["low", "10 W"],
               ["mid", "20 W"],
@@ -387,7 +387,7 @@ Example of a calculate response:
             ]
           },
           "speed": {
-              "linked": "this.engine.mode",
+              "linked": "engine.mode",
               "cases": [
                   ["low", "100.0 rpm"],
                   ["mid", "200.0 rpm"],
@@ -399,7 +399,7 @@ Example of a calculate response:
         "lights": {
           "status": {"states": ["off", "on"]},
           "power": {
-            "linked": "this.lights.status",
+            "linked": "lights.status",
             "cases": [
               ["off", "0 W"],
               ["on", "5 W"]

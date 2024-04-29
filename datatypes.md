@@ -60,8 +60,8 @@ awaredb.update([
     "name": "Jane Doe",
     "salary": {
       "gross": "100000",
-      "net": "this.salary.gross - this.salary.tax",
-      "tax": "Tax.salary(this.salary.gross)",
+      "net": "salary.gross - salary.tax",
+      "tax": "Tax.salary(salary.gross)",
     }
   },
 ])
@@ -83,7 +83,7 @@ awaredb.update({
   },
   "engine": {
     "power": {
-      "linked": "this.package"
+      "linked": "package"
       "cases": [
         ["comfort", "96 hp"],
         ["sport", "250 hp"]
@@ -231,12 +231,12 @@ awaredb.update([
     }
   },
   {
-    "uid": "2023-023",
+    "uid": "2023_023",
     "name": "Jane Doe",
     "salary": {
       "gross": "100000",
-      "net": "this.salary.gross - this.salary.tax",
-      "tax": "Tax.salary(this.salary.gross)",
+      "net": "salary.gross - salary.tax",
+      "tax": "Tax.salary(salary.gross)",
     }
   }
 ])
@@ -341,7 +341,7 @@ awaredb.update({
   },
   "engine": {
     "power": {
-      "linked": "this.package"
+      "linked": "package"
       "cases": [
         ["comfort", "96 hp"],
         ["sport", "250 hp"]
@@ -366,7 +366,7 @@ awaredb.update({
       "states": ["on", "off"],
     },
     "power_consumption": {
-      "linked": "this.lights.status",
+      "linked": "lights.status",
       "cases": [
         ["on", "20 W"],
         ["off", "0 W"]
@@ -378,7 +378,7 @@ awaredb.update({
       "states": ["on", "off"],
     }
     "power_consumption": {
-      "linked": "this.lights.status",
+      "linked": "lights.status",
       "cases": [
         ["on", "600 W"],
         ["off", "0 W"]
@@ -387,9 +387,9 @@ awaredb.update({
   },
   "mode": {
     "states": {
-      "off": ["this.lights.off", "this.ac.off"],
-      "economic": ["this.lights.on", "this.ac.off"],
-      "comfort": ["this.lights.on", "this.ac.on"]
+      "off": ["lights.off", "ac.off"],
+      "economic": ["lights.on", "ac.off"],
+      "comfort": ["lights.on", "ac.on"]
     }
   },
   "power_consumption": "sum(children.power_consumption)"
@@ -462,6 +462,6 @@ A text refers to a sequence of characters enclosed within quotation marks. Addit
 awaredb.update({
   "uid": "Blog",
   "author": "Jane Doe",
-  "summary": "Lorem ipsum dolor sit amet by Blog.author."
+  "summary": "Lorem ipsum dolor sit amet {{author}}."
 })
 ```

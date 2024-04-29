@@ -6,14 +6,14 @@ This chapter provides a comprehensive guide to various functions, constants and 
 
 They are used to retrieve special values from properties or nodes.
 
-- `children`: Returns all sub-properties or sub-nodes inside of a `path`. Example: `this.children`.
+- `children`: Returns all sub-properties or sub-nodes inside of a `path`. Example: `children`.
 - `date`: Returns date from a datetime value.
 - `time`: Returns time from a datetime value.
 
 
 ## Higher End Functions
 
-All higher end functions are used to transform values from properties values or nodes lists. They can be used as continuation of a path `this.children.map(x => expression)`.
+All higher end functions are used to transform values from properties values or nodes lists. They can be used as continuation of a path `children.map(x => expression)`.
 
 - `map(x => expression)`: Takes an array of values and applies a transformation to each value. Example: `[1, 2, 3].map(x => x + 1)` returns `[2, 3, 4]`.
 - `filter(x => expression)`: Takes an array of values a new array with only values that meet certain criteria. Example: `[1, 2, 3].filter(x => x > 1)` returns `[2, 3]`.

@@ -23,7 +23,7 @@ awaredb.update(
     "uid": "myFirstNode",
     "hello": "Hello",
     "world": "World",
-    "full_text": "this.hello this.world!"
+    "full_text": "{{hello}} {{world}}!"
   }
 )
 ```
@@ -72,7 +72,7 @@ awaredb.update({
   "uid": "example",
   "forceFormula": "=2 + 3",
   "forceText": "#2 + 3",
-  "reference": "The result of {{this.forceText}} is {{this.forceFormula}}",
+  "reference": "The result of {{forceText}} is {{forceFormula}}",
 })
 
 result = awaredb.get("example.forceFormula")

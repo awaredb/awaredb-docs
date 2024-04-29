@@ -56,13 +56,13 @@ awaredb.update({
   },
   "engine": "eng_200_2023",
   "batteries": {
-    "linked": "this.packages",
+    "linked": "packages",
     "cases": [
       ["standard", "bat60"],
       ["long_range", "bat100"],
     ]
   },
-  "range": "this.batteries.capacity * this.engine.km_per_kwh",
+  "range": "batteries.capacity * engine.km_per_kwh",
 })
 ```
 

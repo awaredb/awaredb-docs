@@ -185,17 +185,17 @@ awaredb.update(data=[
     "name": "Fan",
     "mode": {
       "states": {
-        "off": ["this.engine.mode.off", "this.lights.status.off"],
-        "low": ["this.engine.mode.low", "this.lights.status.on"],
-        "mid": ["this.engine.mode.mid", "this.lights.status.on"],
-        "high": ["this.engine.mode.high", "this.lights.status.on"]
+        "off": ["engine.mode.off", "lights.status.off"],
+        "low": ["engine.mode.low", "lights.status.on"],
+        "mid": ["engine.mode.mid", "lights.status.on"],
+        "high": ["engine.mode.high", "lights.status.on"]
       }
     },
-    "power": "=sum(this.children.power)",
+    "power": "=sum(children.power)",
     "engine": {
       "mode": {"states": ["off", "low", "mid", "high"]},
       "power": {
-        "linked": "this.engine.mode",
+        "linked": "engine.mode",
         "cases": [
           ["low", "10 W"],
           ["mid", "20 W"],
@@ -203,12 +203,12 @@ awaredb.update(data=[
           ["default", "0 W"]
         ]
       },
-      "speed": "=10 rpm * (this.engine.power / 1 W)"
+      "speed": "=10 rpm * (engine.power / 1 W)"
     },
     "lights": {
       "status": {"states": ["off", "on"]},
       "power": {
-        "linked": "this.lights.status",
+        "linked": "lights.status",
         "cases": [
           ["off", "0 W"],
           ["on", "5 W"]
@@ -224,17 +224,17 @@ Output: [
       "name": "Fan",
       "mode": {
         "states": {
-          "off": ["this.engine.mode.off", "this.lights.status.off"],
-          "low": ["this.engine.mode.low", "this.lights.status.on"],
-          "mid": ["this.engine.mode.mid", "this.lights.status.on"],
-          "high": ["this.engine.mode.high", "this.lights.status.on"]
+          "off": ["engine.mode.off", "lights.status.off"],
+          "low": ["engine.mode.low", "lights.status.on"],
+          "mid": ["engine.mode.mid", "lights.status.on"],
+          "high": ["engine.mode.high", "lights.status.on"]
         }
       },
-      "power": "=sum(this.children.power)",
+      "power": "=sum(children.power)",
       "engine": {
         "mode": {"states": ["off", "low", "mid", "high"]},
         "power": {
-          "linked": "this.engine.mode",
+          "linked": "engine.mode",
           "cases": [
             ["low", "10 W"],
             ["mid", "20 W"],
@@ -242,12 +242,12 @@ Output: [
             ["default", "0 W"]
           ]
         },
-        "speed": "=10 rpm * (this.engine.power / 1 W)"
+        "speed": "=10 rpm * (engine.power / 1 W)"
       },
       "lights": {
         "status": {"states": ["off", "on"]},
         "power": {
-          "linked": "this.lights.status",
+          "linked": "lights.status",
           "cases": [
             ["off", "0 W"],
             ["on", "5 W"]
@@ -257,19 +257,19 @@ Output: [
       "value": {
         "mode": {
           "states": {
-            "off": ["this.engine.mode.off", "this.lights.status.off"],
-            "low": ["this.engine.mode.low", "this.lights.status.on"],
-            "mid": ["this.engine.mode.mid", "this.lights.status.on"],
-            "high": ["this.engine.mode.high", "this.lights.status.on"]
+            "off": ["engine.mode.off", "lights.status.off"],
+            "low": ["engine.mode.low", "lights.status.on"],
+            "mid": ["engine.mode.mid", "lights.status.on"],
+            "high": ["engine.mode.high", "lights.status.on"]
           }
         },
         "power": {
-            "linked": "this.engine.mode",
+            "linked": "engine.mode",
             "cases": [
                 [
                     "low",
                     {
-                        "linked": "this.lights.status",
+                        "linked": "lights.status",
                         "cases": [
                             ["off", "10.0 W"],
                             ["on", "15.0 W"],
@@ -279,7 +279,7 @@ Output: [
                 [
                     "mid",
                     {
-                        "linked": "this.lights.status",
+                        "linked": "lights.status",
                         "cases": [
                             ["off", "20.0 W"],
                             ["on", "25.0 W"],
@@ -289,7 +289,7 @@ Output: [
                 [
                     "high",
                     {
-                        "linked": "this.lights.status",
+                        "linked": "lights.status",
                         "cases": [
                             ["off", "30.0 W"],
                             ["on", "35.0 W"],
@@ -299,7 +299,7 @@ Output: [
                 [
                     "default",
                     {
-                        "linked": "this.lights.status",
+                        "linked": "lights.status",
                         "cases": [
                             ["off", "0.0 W"],
                             ["on", "5.0 W"],
@@ -311,7 +311,7 @@ Output: [
         "engine": {
           "mode": {"states": ["off", "low", "mid", "high"]},
           "power": {
-            "linked": "this.engine.mode",
+            "linked": "engine.mode",
             "cases": [
               ["low", "10 W"],
               ["mid", "20 W"],
@@ -320,7 +320,7 @@ Output: [
             ]
           },
           "speed": {
-              "linked": "this.engine.mode",
+              "linked": "engine.mode",
               "cases": [
                   ["low", "100.0 rpm"],
                   ["mid", "200.0 rpm"],
@@ -332,7 +332,7 @@ Output: [
         "lights": {
           "status": {"states": ["off", "on"]},
           "power": {
-            "linked": "this.lights.status",
+            "linked": "lights.status",
             "cases": [
               ["off", "0 W"],
               ["on", "5 W"]
